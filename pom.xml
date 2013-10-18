@@ -232,7 +232,7 @@
 
 
     <build>
-        <finalName>stormpath-spring-security-example</finalName>
+        <finalName>ROOT</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -287,7 +287,7 @@
                 <configuration>
                     <url>http://localhost:8080/manager/text</url>
                     <server>my-tomcat</server>
-                    <path>/stormpath-spring-security-example</path>
+                    <path>/</path>
                 </configuration>
             </plugin>
             <plugin>

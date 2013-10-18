@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class SpringSecurityExampleController {
 
-	@RequestMapping("/public")
+	@RequestMapping("/")
 	public String accessPublicPage(Model model) {
 		model.addAttribute("message", "This page is publicly accessible. No authentication is required to view.");
 
