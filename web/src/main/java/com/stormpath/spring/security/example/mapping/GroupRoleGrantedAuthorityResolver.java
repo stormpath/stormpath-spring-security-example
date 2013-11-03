@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.stormpath.spring.example.mapping;
+package com.stormpath.spring.security.example.mapping;
 
 import com.stormpath.sdk.group.Group;
-import com.stormpath.spring.provider.GroupGrantedAuthorityResolver;
+import com.stormpath.spring.security.provider.GroupGrantedAuthorityResolver;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

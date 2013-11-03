@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.stormpath.spring.example
+package com.stormpath.spring.security.example
 
 import com.stormpath.sdk.group.Group
-import com.stormpath.spring.example.mapping.GroupRoleGrantedAuthorityResolver
+import com.stormpath.spring.security.example.mapping.GroupRoleGrantedAuthorityResolver
 import org.easymock.EasyMock
 import org.junit.Assert
 import org.junit.Before
