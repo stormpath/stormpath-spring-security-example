@@ -23,6 +23,7 @@ import java.util.List;
  * Bean containing all the <a href="http://docs.stormpath.com/java/product-guide/#custom-data">Custom Data</a> fields
  * structured as a list of {@link CustomDataFieldBean}s
  *
+ * @since 0.2.0
  */
 public class CustomDataBean {
 

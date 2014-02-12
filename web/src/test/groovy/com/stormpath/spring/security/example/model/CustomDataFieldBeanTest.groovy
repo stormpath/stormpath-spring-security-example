@@ -13,32 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.stormpath.spring.security.example.model;
+package com.stormpath.spring.security.example.model
 
-/**
- * Bean holding the key-value information of a single custom data field.
- *
- * @since 0.2.0
- */
-public class CustomDataFieldBean {
+import org.junit.Test
 
-    private String key;
-    private Object value;
+import static org.junit.Assert.assertEquals
 
-    public CustomDataFieldBean(String aKey, Object aValue) {
-        if (aKey == null) {
-            throw new IllegalArgumentException("key cannot be null");
-        }
+class CustomDataFieldBeanTest {
 
-        this.key = aKey;
-        this.value = aValue;
+    @Test(expected = IllegalArgumentException)
+    public void testNull(){
+        new CustomDataFieldBean(null, "bar")
     }
 
-    public String getKey() {
-        return key;
-    }
-
-    public Object getValue() {
-        return value;
+    @Test
+    public void test(){
+        CustomDataFieldBean bean = new CustomDataFieldBean("foo", "bar")
+        assertEquals("foo", bean.key)
+        assertEquals("bar", bean.value)
     }
 }

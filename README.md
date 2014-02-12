@@ -8,6 +8,7 @@ This sample application uses the [Stormpath Spring Security](https://github.com/
 
 The `stormpath-spring-security` plugin allows a [Spring Security](http://projects.spring.io/spring-security/)-enabled application to use the [Stormpath](http://www.stormpath.com) User Management & Authentication service for all authentication and access control needs.
 
+Usage documentation [is in the wiki](https://github.com/stormpath/stormpath-spring-security-example/wiki).
 
 ## Setup ##
 
@@ -25,13 +26,17 @@ The `stormpath-spring-security` plugin allows a [Spring Security](http://project
 
 1. Clone and install the [stormpath-spring-security](https://github.com/stormpath/stormpath-spring-security) plugin into your local machine:
 
-		git clone git@github.com:stormpath/stormpath-spring-security.git
-		cd stormpath-spring-security
-		mvn clean install
+```shell
+git clone git@github.com:stormpath/stormpath-spring-security.git
+cd stormpath-spring-security
+mvn clean install
+```
 
 2. Clone stormpath-spring-security-example into your local machine:
 
-		git clone git@github.com:stormpath/stormpath-spring-security-example.git 
+```shell
+git clone git@github.com:stormpath/stormpath-spring-security-example.git
+```
 
 3. Edit `stormpath-spring-security-example/web/src/main/webapp/WEB-INF/spring-security.xml`:
 
@@ -43,57 +48,80 @@ The `stormpath-spring-security` plugin allows a [Spring Security](http://project
 
 1. This project requires Maven 3 to build. Run the following from a command prompt:
 
-		mvn install
+`mvn install`
 
 2. Run it:
 
-		mvn tomcat:run
-
-### Usage Instructions ###
-
-Once it is running, open the following url in your web browser: `http://localhost:8080`. It will automatically display a publicly visible web-page with the legend "This page is publicly accessible. No authentication is required to view it.".
-
-Now, go to `http://localhost:8080/secured/mypage`. You will be prompted to enter credentials. Any Stormpath account belonging to the group that you configured in step 3.2 of "Configure the Sample Application" will be granted access to it. After authenticating, you should see a page with the legend "You are now authenticated and authorized to view this page." You can also enter the credentials of another account not being part of that group and, although you will be successfully authenticated, you will no be allowed to see the secured page.
-
-You can always close your web session by going to `http://localhost:8080/logout`.
+`mvn tomcat:run`
 
 ## Using your domain-specific Role names ##
 
-By default, the stormpath-spring-security plugin uses Groups's HREFs as the role names for Spring Security. In this sample app, we have included the `GroupRoleGrantedAuthorityResolver` class which provides functionality to map Group's HREFs to any desired domain-specific role name.
+By default, the stormpath-spring-security plugin and this sample app uses Groups's HREFs as the role names for Spring Security. In this sample app, we have also included another `GroupGrantedAuthorityResolver`, the `GroupRoleGrantedAuthorityResolver` class which provides functionality to map Group's HREFs to any desired domain-specific role name. It is not enabled by default but it is present here as it may come in handy for you.
 
 ### Configuration ###
 
-1. Add mappings in `stormpath-spring-security-example/web/src/main/webapp/WEB-INF/spring-security.xml`:
+1. Add your own mappings in `stormpath-spring-security-example/web/src/main/webapp/WEB-INF/spring-security.xml`:
 
-	    <beans:bean id="groupRoleGrantedAuthoritiesMap" class="java.util.HashMap" scope="prototype" >
-    	    <beans:constructor-arg>
-        	    <beans:map key-type="java.lang.String" value-type="java.util.List">
-            	    <beans:entry key="ONE_STORMPATH_GROUP_HREF_HERE">
-                	    <beans:list>
-                    	    <beans:value>ROLE_A</beans:value>
-                        	<beans:value>ROLE_B</beans:value>
-	                    </beans:list>
-    	            </beans:entry>
-        	        <beans:entry key="ANOTHER_STORMPATH_GROUP_HREF_HERE" value="ROLE_USER" />
-            	    <beans:entry key="YET_ANOTHER_STORMPATH_GROUP_HREF_HERE" value="ROLE_ADMIN" />
-	            </beans:map>
-    	    </beans:constructor-arg>
-	    </beans:bean>
-	    
-2. Set the Group Resolver to `StormpathAuthenticationProvider`
+```xml
+<beans:bean id="groupRoleGrantedAuthoritiesMap" class="java.util.HashMap" scope="prototype" >
+	<beans:constructor-arg>
+    	<beans:map key-type="java.lang.String" value-type="java.util.List">
+        	<beans:entry key="ONE_STORMPATH_GROUP_HREF_HERE">
+            	<beans:list>
+                	<beans:value>ROLE_A</beans:value>
+                    <beans:value>ROLE_B</beans:value>
+	            </beans:list>
+    	    </beans:entry>
+        	<beans:entry key="ANOTHER_STORMPATH_GROUP_HREF_HERE" value="ROLE_USER" />
+            <beans:entry key="YET_ANOTHER_STORMPATH_GROUP_HREF_HERE" value="ROLE_ADMIN" />
+	    </beans:map>
+    </beans:constructor-arg>
+</beans:bean>
+```
 
-	    <beans:bean id="groupGrantedAuthorityResolver" class="com.stormpath.spring.security.example.mapping.GroupRoleGrantedAuthorityResolver" >
-	        <beans:constructor-arg ref="groupRoleGrantedAuthoritiesMap" />
-    	</beans:bean> 
+2. Set the Group Resolver to `StormpathAuthenticationProvider`:
 
-		<beans:bean id="stormpathAuthenticationProvider" class="com.stormpath.spring.security.provider.StormpathAuthenticationProvider">
-	        ...
-	        <beans:property name="groupGrantedAuthorityResolver" ref="groupGrantedAuthorityResolver" />
-	    </beans:bean>
-	    
+```xml
+<beans:bean id="groupGrantedAuthorityResolver" class="com.stormpath.spring.security.example.mapping.GroupRoleGrantedAuthorityResolver" >
+	<beans:constructor-arg ref="groupRoleGrantedAuthoritiesMap" />
+</beans:bean>
+
+<beans:bean id="stormpathAuthenticationProvider" class="com.stormpath.spring.security.provider.StormpathAuthenticationProvider">
+	<!-- etc... -->
+	<beans:property name="groupGrantedAuthorityResolver" ref="groupGrantedAuthorityResolver" />
+</beans:bean>
+
 3. Specify your Spring Security access rules using the mapped roles names in your application. For example, in this case, the secured resource is available to `ROLE_A` (belonging to `ONE_STORMPATH_GROUP_HREF_HERE` in step 1):
 
-	    <http auto-config='true' access-decision-manager-ref="accessDecisionManager" >
-	        <intercept-url pattern="/secured/*" access="ROLE_A" />
-	        <logout logout-url="/logout" logout-success-url="/logoutSuccess.jsp"/>
-    	</http>
+```xml
+<http auto-config='true' access-decision-manager-ref="accessDecisionManager" >
+	<intercept-url pattern="/secured/*" access="ROLE_A" />
+	<logout logout-url="/logout" logout-success-url="/logoutSuccess.jsp"/>
+</http>
+```
+
+This way, your application code can stay agnostic of the Stormpath's role names. Now, in your code you can do this:
+
+``java
+@PreAuthorize("hasRole('ROLE_A')")
+```
+as opposed to:
+
+```java
+@PreAuthorize("hasRole('https://api.stormpath.com/v1/groups/l4aDkz0QPcf2z23j93l1T')")
+```
+
+
+## Change Log
+
+### 0.2.0
+
+- Upgraded Stormpath SDK dependency to latest stable release of 0.9.2
+- Upgraded Spring Security Stormpath plugin to latest stable release of 0.2.0
+- Added page to view and edit account's CustomData
+- Added Permissions example. It is now possible to use Spring Security Granted Authorities as permissions for Stormpath Accounts or Groups by leveraging Stormpath's newly released [CustomData](http://docs.stormpath.com/rest/product-guide/#custom-data) feature.
+- Stormpath SDK now has a Spring cache configured: a simple JDK ConcurrentMap
+
+### 0.1.0
+
+- First release

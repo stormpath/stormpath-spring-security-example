@@ -1,10 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ ~ Copyright (c) 2014 Stormpath, Inc. and contributors
+ ~
+ ~ Licensed under the Apache License, Version 2.0 (the "License");
+ ~ you may not use this file except in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~     http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing, software
+ ~ distributed under the License is distributed on an "AS IS" BASIS,
+ ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~ See the License for the specific language governing permissions and
+ ~ limitations under the License.
+-->
 <beans:beans xmlns="http://www.springframework.org/schema/security"
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://www.springframework.org/schema/beans
-          http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+          http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
           http://www.springframework.org/schema/security
-          http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+          http://www.springframework.org/schema/security/spring-security-3.2.xsd" >
 
     <beans:import resource="spring/appServlet/servlet-context.xml" />
 
@@ -29,34 +45,24 @@
         <beans:constructor-arg ref="groupRoleGrantedAuthoritiesMap" />
     </beans:bean -->
 
-    <!-- By default, the DecisionManager is enforcing permissions to have the "ROLE_" prefix. We need to change that if
-        want to use any role name -->
-    <beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
-        <beans:property name="decisionVoters">
-            <beans:list>
-                <beans:bean class="org.springframework.security.access.vote.RoleVoter">
-                    <beans:property name="rolePrefix" value=""/>
-                </beans:bean>
-                <beans:bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
-            </beans:list>
-        </beans:property>
-    </beans:bean>
-
     <beans:bean id="authenticationProvider" class="com.stormpath.spring.security.provider.StormpathAuthenticationProvider">
         <beans:property name="client" ref="stormpathClient" />
-        <beans:property name="applicationRestUrl" value="https://api.stormpath.com/v1/applications/3TqbyZ1qo74eDM4gTo2H94"/>
+        <beans:property name="applicationRestUrl" value="REPLACE_ME_WITH_YOUR_STORMPATH_APP_REST_URL"/>
         <!-- When mapping to domain-specific role names (ie. using GroupRoleGrantedAuthorityResolver) -->
         <!-- beans:property name="groupGrantedAuthorityResolver" ref="groupGrantedAuthorityResolver" / -->
     </beans:bean>
 
-    <!-- Setting our own accessDecisionManager is only required when our roles names do not start with "ROLE_" -->
-    <http auto-config='true' access-decision-manager-ref="accessDecisionManager" >
-        <intercept-url pattern="/secured/*" access="https://api.stormpath.com/v1/groups/d8UDkz9QPcn2z73j93m6Z" />
-        <logout logout-url="/logout" logout-success-url="/logoutSuccess.jsp"/>
+    <http auto-config='true' use-expressions="true" >
+        <intercept-url pattern="/account/*" access="hasRole('REPLACE_ME_WITH_YOUR_STORMPATH_GROUP_ALLOWED_TO_ACCESS_THIS_SECURED_RESOURCE')" />
+        <logout logout-url="/logout" logout-success-url="/index.jsp"/>
     </http>
 
     <authentication-manager>
         <authentication-provider ref='authenticationProvider'/>
     </authentication-manager>
+
+    <global-method-security pre-post-annotations="enabled" secured-annotations="enabled">
+        <expression-handler ref="methodExpressionHandler"/>
+    </global-method-security>
 
 </beans:beans>

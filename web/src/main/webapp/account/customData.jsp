@@ -1,5 +1,5 @@
 <%--
-  ~ Copyright (c) 2012 Stormpath, Inc. and contributors
+  ~ Copyright (c) 2014 Stormpath, Inc. and contributors
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -13,11 +13,12 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   --%>
-<%@ include file="../include.jsp" %>
+<%@ include file="/include.jsp" %>
 <%@ page session="false" %>
 
 <html>
 <head>
+    <link type="text/css" rel="stylesheet" href="<c:url value="/style.css"/>"/>
     <title>Custom Data</title>
 </head>
 
@@ -31,10 +32,10 @@
 </tr>
 </table>
 
-<br/><br/><br/>
+<br/><br/>
 
-<!-- Table used to add data to the account's custom data. If the key does not exists in the custom data, then
-it will be added to it. If the key already exists, the value will be appended to the existing values -->
+<h3>Add custom data to the account</h3>
+<p>Note: If the key already exists in the account's custom data, the value will be appended to the existing field.</p>
 <table id="newCustomFieldTable" width="80%" border="1" rules="none">
     <tr>
         <td>Key : <input type="text" id="newKey" name="newKey" size="50%"/> </td>
@@ -85,21 +86,31 @@ it will be added to it. If the key already exists, the value will be appended to
                 alert("Custom data velues cannot be empty")
                 return
             }
-            var response = $.ajax({ type: 'POST',
-                url: targetUrl,
-                async: false,
-                data: { 'key': key, 'value': value }
-            }).responseText;
-            returnedValue = response;
-            if(returnedValue != value) {
-                $('#customDataTable tr[id=' + key + ']').remove()
-            }
-            $('#customDataTable').append('<tr id="'+key+'"><td>' + key + '</td><td>' + returnedValue + '</td><td align="center"><a href=\"javascript:;\" onclick=\"deleteCustomDataField(\''+ accountId + '\',\'' + key +'\')">Delete</a></td></tr>');
             $('#newKey').val('');
             $('#newValue').val('');
+            $.ajax({ type: 'POST',
+                url: targetUrl,
+                async: true,
+                data: { 'key': key, 'value': value },
+                success: function(returnedValue) {
+                    if(returnedValue != value) {
+                        $('#customDataTable tr[id=' + key + ']').remove()
+                    }
+                    $('#customDataTable').append('<tr id="'+key+'"><td>' + key + '</td><td>' + returnedValue + '</td>' +
+                            '<td align="center"><a href=\"javascript:;\" onclick=\"deleteCustomDataField(\''+ accountId +
+                            '\',\'' + key +'\')">Delete</a></td></tr>');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    if(jqXHR.readyState == 0 || jqXHR.status == 0){
+                        return;  // it's not really an error
+                    } else {
+                        alert('There was an error inserting the Custom Data Field');
+                    }
+                }
+            });
         });
     });
-    //Let's detect "Enter" key pressed in the New Value field.
+    //Let's detect tje "Enter" key pressed in the New Value field.
     $(document).ready(function() {
         $("#newValue").keyup(function(event){
             if(event.keyCode == 13){
@@ -108,7 +119,7 @@ it will be added to it. If the key already exists, the value will be appended to
             }
         })
     });
-    //Deletion of custom data fields will carried out using this jQuery call.
+    //Removal of custom data fields will carried out using this jQuery call.
     function deleteCustomDataField(accountId, key) {
         var targetUrl = "/account/customData/"+accountId+"/"+key;
         $.ajax({
@@ -122,7 +133,11 @@ it will be added to it. If the key already exists, the value will be appended to
                 $('#customDataTable tr[id=' + key + ']').remove()
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert('There was an error deleting the Custom Data Field.');
+                if(jqXHR.readyState == 0 || jqXHR.status == 0){
+                    return;  // it's not really an error
+                } else {
+                    alert('There was an error deleting the Custom Data Field.');
+                }
             }
         });
     }

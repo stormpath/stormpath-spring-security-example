@@ -1,5 +1,5 @@
 <%--
-  ~ Copyright (c) 2012 Stormpath, Inc. and contributors
+  ~ Copyright (c) 2014 Stormpath, Inc. and contributors
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -13,5 +13,6 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<%-- Forward the user to the home page --%>
+<jsp:forward page="home.jsp"/>
