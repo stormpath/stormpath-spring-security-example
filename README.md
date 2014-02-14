@@ -24,21 +24,13 @@ Usage documentation [is in the wiki](https://github.com/stormpath/stormpath-spri
 
 ### Configure the Sample Application ###
 
-1. Clone and install the [stormpath-spring-security](https://github.com/stormpath/stormpath-spring-security) plugin into your local machine:
-
-	```shell
-	git clone git@github.com:stormpath/stormpath-spring-security.git
-	cd stormpath-spring-security
-	mvn clean install
-	```
-
-2. Clone stormpath-spring-security-example into your local machine:
+1. Clone stormpath-spring-security-example into your local machine:
 
 	```shell
 	git clone git@github.com:stormpath/stormpath-spring-security-example.git
 	```
 
-3. Edit `stormpath-spring-security-example/web/src/main/webapp/WEB-INF/spring-security.xml`:
+2. Edit `stormpath-spring-security-example/web/src/main/webapp/WEB-INF/spring-security.xml`:
 
 	1. Replace the `applicationRestUrl` value with your Application's REST URL.
 	2. Insert the [Stormpath Group HREF](http://docs.stormpath.com/console/product-guide/#groups) that will be allowed to access the secured content over `REPLACE_ME_WITH_YOUR_STORMPATH_GROUP_ALLOWED_TO_ACCESS_THIS_SECURED_RESOURCE`.
