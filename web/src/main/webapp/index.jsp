@@ -13,9 +13,6 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   --%>
-<html>
-<title>Logged out</title>
-<body>
-<h2>You have been logged out successfully.</h2>
-</body>
-</html>
+
+<%-- Forward the user to the home page --%>
+<jsp:forward page="home.jsp"/>

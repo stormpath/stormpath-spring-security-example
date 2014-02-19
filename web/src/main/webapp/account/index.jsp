@@ -13,9 +13,21 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   --%>
+<%@ include file="/include.jsp" %>
+
 <html>
-<title>Logged out</title>
+<head>
+    <link type="text/css" rel="stylesheet" href="<c:url value="/style.css"/>"/>
+</head>
 <body>
-<h2>You have been logged out successfully.</h2>
+
+<h2>Users only</h2>
+
+<p>You are currently logged in.</p>
+
+<p><a href="<c:url value="/home.jsp"/>">Return to the home page.</a></p>
+
+<p><a href="<c:url value="/logout"/>">Log out.</a></p>
+
 </body>
 </html>
