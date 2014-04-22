@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2013 Stormpath, Inc.
+  ~ Copyright 2014 Stormpath, Inc.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -83,8 +83,8 @@
         <slf4j.version>1.7.5</slf4j.version>
         <spring.security.version>3.2.0.RELEASE</spring.security.version>
         <spring.webmvc.version>4.0.1.RELEASE</spring.webmvc.version>
-        <stormpath.sdk.version>0.9.2</stormpath.sdk.version>
-        <stormpath.spring.security.version>0.2.0</stormpath.spring.security.version>
+        <stormpath.sdk.version>1.0.alpha</stormpath.sdk.version>
+        <stormpath.spring.security.version>0.3.0</stormpath.spring.security.version>
 
         <!-- Test Dependencies: -->
         <easymock.version>3.1</easymock.version>

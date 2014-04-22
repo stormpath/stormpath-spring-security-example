@@ -107,6 +107,11 @@ as opposed to:
 
 ## Change Log
 
+### 0.3.0
+
+- Upgraded Stormpath SDK dependency to latest release of 1.0.alpha
+- Removed dynamic permissions for CustomData changes. User must logout and re-login to get permission changes applied.
+
 ### 0.2.0
 
 - Upgraded Stormpath SDK dependency to latest stable release of 0.9.2
