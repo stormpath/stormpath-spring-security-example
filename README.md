@@ -109,8 +109,11 @@ as opposed to:
 
 ### 0.3.0
 
-- Upgraded Stormpath SDK dependency to latest release of 1.0.alpha
 - Removed dynamic permissions for CustomData changes. User must logout and re-login to get permission changes applied.
+- Upgraded Stormpath SDK dependency to latest release of 1.0.beta
+- Upgraded Spring Security to version 3.2.3.RELEASE
+- Upgraded Spring Web MVC to version 4.0.4.RELEASE
+- Upgraded Stormpath Spring Security to version 0.3.0
 
 ### 0.2.0
 

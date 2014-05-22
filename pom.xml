@@ -28,7 +28,7 @@
 
     <groupId>com.stormpath.spring</groupId>
     <artifactId>stormpath-spring-security-example-root</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Stormpath Spring Security Example</name>
@@ -81,10 +81,10 @@
         <jstl.version>1.2</jstl.version>
         <logback.version>1.0.13</logback.version>
         <slf4j.version>1.7.5</slf4j.version>
-        <spring.security.version>3.2.0.RELEASE</spring.security.version>
-        <spring.webmvc.version>4.0.1.RELEASE</spring.webmvc.version>
-        <stormpath.sdk.version>1.0.alpha</stormpath.sdk.version>
-        <stormpath.spring.security.version>0.3.0</stormpath.spring.security.version>
+        <spring.security.version>3.2.3.RELEASE</spring.security.version>
+        <spring.webmvc.version>4.0.4.RELEASE</spring.webmvc.version>
+        <stormpath.sdk.version>1.0.beta</stormpath.sdk.version>
+        <stormpath.spring.security.version>0.3.0-SNAPSHOT</stormpath.spring.security.version>
 
         <!-- Test Dependencies: -->
         <easymock.version>3.1</easymock.version>
@@ -116,11 +116,23 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
             <version>${spring.security.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-aop</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
             <version>${spring.security.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-aop</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -163,6 +175,12 @@
                 <groupId>com.stormpath.spring.security</groupId>
                 <artifactId>stormpath-spring-security-core</artifactId>
                 <version>${stormpath.spring.security.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-aop</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
