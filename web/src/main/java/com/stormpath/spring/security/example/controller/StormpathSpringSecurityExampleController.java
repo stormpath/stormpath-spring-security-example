@@ -15,6 +15,7 @@
  */
 package com.stormpath.spring.security.example.controller;
 
+import com.stormpath.spring.security.example.authc.OauthLoginFactory;
 import com.stormpath.spring.security.example.model.CustomDataBean;
 import com.stormpath.spring.security.example.model.CustomDataFieldBean;
 import com.stormpath.spring.security.provider.AccountCustomDataPermissionResolver;
@@ -32,6 +33,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.io.IOException;
 
 /**
  * Spring MVC Controller handling Custom Data-related requests
@@ -47,6 +51,9 @@ public class StormpathSpringSecurityExampleController {
 
     @Autowired
     private StormpathAuthenticationProvider authenticationProvider;
+
+    @Autowired
+    private OauthLoginFactory oauthLoginFactory;
 
     private final String hrefBase = "https://api.stormpath.com/v1/";
 
@@ -114,6 +121,61 @@ public class StormpathSpringSecurityExampleController {
         return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * @since 0.3.0
+     */
+    @RequestMapping(value = "/googleOauthCallback", method = RequestMethod.GET)
+    public ModelAndView googleOauthCallback(@RequestParam(value = "code", required = true) String code) {
+        ModelAndView model = new ModelAndView();
+        try {
+            if(!oauthLoginFactory.createGoogleLogin().doLogin(code)) {
+                model.addObject("error", "There was an error trying to login with the Google account.");
+                model.setViewName("login");
+                return model;
+            }
+        } catch (IOException ex) {
+            logger.warn(ex.getMessage());
+        }
+        model.setViewName("home");
+        return model;
+    }
+
+    /**
+     * @since 0.3.0
+     */
+    @RequestMapping(value = "/facebookOauthCallback", method = RequestMethod.GET)
+    public ModelAndView facebookOauthCallback(@RequestParam(value = "code", required = true) String code) {
+        ModelAndView model = new ModelAndView();
+        try {
+            if(!oauthLoginFactory.createFacebookLogin().doLogin(code)) {
+                model.addObject("error", "There was an error trying to login with the Facebook account.");
+                model.setViewName("login");
+                return model;
+            }
+        } catch (IOException ex) {
+            logger.warn(ex.getMessage());
+        }
+        model.setViewName("home");
+        return model;
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView login(
+            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "logout", required = false) String logout) {
+
+        ModelAndView model = new ModelAndView();
+        if (error != null) {
+            model.addObject("error", error);
+        }
+
+        if (logout != null) {
+            model.addObject("msg", "You've been logged out successfully.");
+        }
+        model.setViewName("/login");
+
+        return model;
+    }
 
     /**
      * Checks whether the given key equals the "spring security permission string". See: <a href="https://github.com/stormpath/stormpath-spring-security/wiki#wiki-permissions"></a>

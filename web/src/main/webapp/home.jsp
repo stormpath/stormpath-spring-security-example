@@ -43,7 +43,7 @@
     %>
     <c:out value="${account.givenName}"/></sec:authorize>!
     ( <sec:authorize access="isFullyAuthenticated()"><a href="<c:url value="/logout"/>">Log out</a></sec:authorize>
-    <sec:authorize access="!isFullyAuthenticated()"><a href="<c:url value="/spring_security_login"/>">Log in</a> (sample accounts provided)</sec:authorize> )
+    <sec:authorize access="!isFullyAuthenticated()"><a href="<c:url value="/login"/>">Log in</a> (sample accounts provided)</sec:authorize> )
 </p>
 
 <p>Welcome to the Stormpath + Spring Security Quickstart sample application.

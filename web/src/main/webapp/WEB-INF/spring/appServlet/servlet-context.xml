@@ -29,8 +29,9 @@
 
     <!-- Imports user-defined @Controller beans that process client requests -->
     <context:component-scan base-package="com.stormpath.spring.security.example.controller" />
+    <context:component-scan base-package="com.stormpath.spring.security.example.service" />
 
-    <!-- Reequired to get the Spring Security Principal in a Spring MVC Controller method -->
+    <!-- Required to get the Spring Security Principal in a Spring MVC Controller method -->
     <mvc:annotation-driven>
         <mvc:argument-resolvers>
             <bean class="org.springframework.security.web.bind.support.AuthenticationPrincipalArgumentResolver"/>
