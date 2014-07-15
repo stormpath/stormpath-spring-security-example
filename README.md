@@ -107,6 +107,11 @@ as opposed to:
 
 ## Change Log
 
+### 0.3.0
+
+- Upgraded Stormpath SDK dependency to latest stable release of 1.0.RC2
+- Upgraded Spring Security Stormpath plugin to latest stable release of 0.3.0
+
 ### 0.2.0
 
 - Upgraded Stormpath SDK dependency to latest stable release of 0.9.2
