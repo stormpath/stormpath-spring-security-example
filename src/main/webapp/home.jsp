@@ -1,5 +1,6 @@
 <%@ page import="com.stormpath.spring.security.provider.StormpathUserDetails" %>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="com.stormpath.spring.security.web.conf.Configuration" %>
 <%--
   ~ Copyright (c) 2014 Stormpath, Inc. and contributors
   ~
@@ -39,23 +40,36 @@
         //This should never be done in a normal page and should exist in a proper MVC controller of some sort, but for this
         //demo, we'll just pull out Stormpath Account data from Spring Security's principal <c:out/> tag next:
         pageContext.setAttribute("account", ((StormpathUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getProperties());
-
     %>
     <c:out value="${account.givenName}"/></sec:authorize>!
-    ( <sec:authorize access="isFullyAuthenticated()"><a href="<c:url value="/logout"/>">Log out</a></sec:authorize>
-    <sec:authorize access="!isFullyAuthenticated()"><a href="<c:url value="/spring_security_login"/>">Log in</a> (sample accounts provided)</sec:authorize> )
+    ( <sec:authorize access="isFullyAuthenticated()">
+        <% if (Configuration.isIDSiteEnabled()) { %>
+            <a href="<c:url value="/idsite/logout"/>">Log out</a>
+        <% } else { %>
+            <a href="<c:url value="/j_spring_security_logout"/>">Log out</a>
+        <% } %>
+    </sec:authorize>
+    <sec:authorize access="!isFullyAuthenticated()">
+        <% if (Configuration.isIDSiteEnabled()) { %>
+            <a href="<c:url value="/idsite/login"/>">Log in</a> (sample accounts provided)
+        <% } else { %>
+            <a href="<c:url value="/spring_security_login"/>">Log in</a> (sample accounts provided)
+        <% } %>
+    </sec:authorize>)
+
 </p>
+
 
 <p>Welcome to the Stormpath + Spring Security Quickstart sample application.
     This page represents the home page of any web application.</p>
 
 <sec:authorize access="isFullyAuthenticated()">
-<p>Visit your <a href="<c:url value="/account"/>">account page</a>.</p>
-<p>Edit your <a href="/account/customData">account's custom data</a>.</p>
+<p>Visit your <a href="<c:url value="/account/index.jsp"/>">account page</a>.</p>
+<p>Edit your <a href="/account/customData.jsp">account's custom data</a>.</p>
 </sec:authorize>
 
-<sec:authorize access="!isFullyAuthenticated()"><p>If you want to access the user-only <a href="<c:url value="/account"/>">account page</a> or <a href="<c:url
-value="/account/customData"/>">custom data page</a>, you will need to log-in first.</p></sec:authorize>
+<sec:authorize access="!isFullyAuthenticated()"><p>If you want to access the user-only <a href="<c:url value="/account/index.jsp"/>">account page</a> or <a href="<c:url
+value="/account/customData.jsp"/>">custom data page</a>, you will need to log-in first.</p></sec:authorize>
 
 <h2>Roles</h2>
 

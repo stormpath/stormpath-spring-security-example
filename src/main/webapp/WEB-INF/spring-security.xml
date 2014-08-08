@@ -23,6 +23,8 @@
           http://www.springframework.org/schema/security/spring-security-3.2.xsd" >
 
     <beans:import resource="spring/appServlet/servlet-context.xml" />
+    <!--<beans:import resource="spring/appServlet/stormpath-servlet-context.xml" />-->
+
 
     <!-- When mapping to domain-specific role names (ie. using GroupRoleGrantedAuthorityResolver) -->
     <!-- beans:bean id="groupRoleGrantedAuthoritiesMap" class="java.util.HashMap" scope="prototype" >
@@ -47,14 +49,18 @@
 
     <beans:bean id="authenticationProvider" class="com.stormpath.spring.security.provider.StormpathAuthenticationProvider">
         <beans:property name="client" ref="stormpathClient" />
-        <beans:property name="applicationRestUrl" value="REPLACE_ME_WITH_YOUR_STORMPATH_APP_REST_URL"/>
+        <!--<beans:property name="applicationRestUrl" value="REPLACE_ME_WITH_YOUR_STORMPATH_APP_REST_URL"/>-->
+        <beans:property name="applicationRestUrl" value="https://api.stormpath.com/v1/applications/3TqbyZ1qo74eDM4gTo2H94"/>
         <!-- When mapping to domain-specific role names (ie. using GroupRoleGrantedAuthorityResolver) -->
         <!-- beans:property name="groupGrantedAuthorityResolver" ref="groupGrantedAuthorityResolver" / -->
     </beans:bean>
 
     <http auto-config='true' use-expressions="true" >
-        <intercept-url pattern="/account/*" access="hasRole('REPLACE_ME_WITH_YOUR_STORMPATH_GROUP_ALLOWED_TO_ACCESS_THIS_SECURED_RESOURCE')" />
-        <logout logout-url="/logout" logout-success-url="/index.jsp"/>
+        <!--<intercept-url pattern="/account/*" access="hasRole('REPLACE_ME_WITH_YOUR_STORMPATH_GROUP_ALLOWED_TO_ACCESS_THIS_SECURED_RESOURCE')" />-->
+        <form-login default-target-url='/index.jsp' always-use-default-target='true' />
+        <intercept-url pattern="/account/*" access="hasRole('https://api.stormpath.com/v1/groups/3IfENtknN1XPzBrD3FIZ1A')" />
+        <!--<logout logout-url="/logout" logout-success-url="/index.jsp"/>-->
+        <logout logout-success-url="/index.jsp"/>
     </http>
 
     <authentication-manager>

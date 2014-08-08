@@ -28,7 +28,7 @@
 <table width="100%">
 <tr>
     <td><a href="<c:url value="/home.jsp"/>">Return to the home page</a></td>
-    <td><a href="<c:url value="/logout"/>">Log out</a></td>
+    <td><a href="<c:url value="/j_spring_security_logout"/>">Log out</a></td>
 </tr>
 </table>
 

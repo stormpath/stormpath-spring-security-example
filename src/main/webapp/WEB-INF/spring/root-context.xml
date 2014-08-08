@@ -30,7 +30,12 @@
         <property name="cacheManager" ref="cacheManager" />
     </bean>
 
+    <!--<import resource="overlay//stormpath-root-context.xml"/>-->
+
     <bean id="customDataManager" class="com.stormpath.spring.security.example.controller.CustomDataManager" />
+    <!--<bean id="oauthLoginFactory" class="com.stormpath.spring.security.example.authc.OauthLoginFactory" scope="singleton" factory-method="createLoginService" />-->
+    <!-- Beans providing operations to interact with Stormpath -->
+    <!--<bean id="idSiteService" class="com.stormpath.spring.security.web.service.IDSiteService" />-->
 
     <!-- We are using our own permission evaluation for WildcardPermissions -->
     <bean id="permissionEvaluator" class="com.stormpath.spring.security.authz.permission.evaluator.WildcardPermissionEvaluator"/>
@@ -53,6 +58,7 @@
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="com.stormpath.sdk.account.Account" />
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="com.stormpath.sdk.group.Group" />
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="com.stormpath.sdk.directory.CustomData" />
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="com.stormpath.sdk.idsite.Nonce" />
             </set>
         </property>
     </bean>
