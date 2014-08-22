@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.stormpath.spring.security.example.controller;
 
 import com.stormpath.sdk.client.Client;
@@ -21,16 +20,11 @@ import com.stormpath.sdk.directory.CustomData;
 import com.stormpath.spring.security.authz.CustomDataPermissionsEditor;
 import com.stormpath.spring.security.example.model.CustomDataBean;
 import com.stormpath.spring.security.example.model.CustomDataFieldBean;
-import com.stormpath.spring.security.provider.StormpathAuthenticationProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
@@ -53,9 +47,6 @@ public class CustomDataManager {
 
     @Autowired
     private Client stormpathClient;
-
-    @Autowired
-    private StormpathAuthenticationProvider authenticationProvider;
 
     /**
      * Method that returns the custom data for the given account.
@@ -97,7 +88,7 @@ public class CustomDataManager {
      * @param isPermissionKey true if the key is the "spring permission string", false otherwise
      * @return a {@link CustomDataFieldBean} instance containing the custom data field just updated
      */
-    @CacheEvict(value = "com.stormpath.sdk.account.Account", key = "#accountHref", condition = "#isPermissionKey" ) //Let's get the account data evicted from the cache so the authentication's permissions are updated
+    @CacheEvict(value = "com.stormpath.sdk.account.Account", key = "#accountHref", condition = "#isPermissionKey" )
     @PreAuthorize("isAuthenticated() and principal.properties.get('href') == #accountHref") //Is the user the owner of the account to be edited?
     public CustomDataFieldBean addCustomDataField(String accountHref, String key, String value, boolean isPermissionKey) {
         if (!StringUtils.hasText(accountHref)) {
@@ -129,7 +120,7 @@ public class CustomDataManager {
      * @param key the key of the custom data field to be deleted
      * @param isPermissionKey true if the key is the "spring permission string", false otherwise
      */
-    @CacheEvict(value = "com.stormpath.sdk.account.Account", key = "#accountHref", condition = "#isPermissionKey" ) //Let's get the account data evicted from the cache so the authentication's permissions are updated
+    @CacheEvict(value = "com.stormpath.sdk.account.Account", key = "#accountHref", condition = "#isPermissionKey" )
     @PreAuthorize("isAuthenticated() and principal.properties.get('href') == #accountHref") //Is the user the owner of the account to be edited?
     public void deleteCustomDataField(String accountHref, String key, boolean isPermissionKey) {
         if (!StringUtils.hasText(accountHref)) {
@@ -143,19 +134,12 @@ public class CustomDataManager {
 
         customData.remove(key);
         customData.save();
-
-        if( isPermissionKey ) {
-            refreshAuthentication();
-        }
-
-
     }
 
     private void addPermission(CustomData customData, String value) {
         CustomDataPermissionsEditor customDataPermissionsEditor = new CustomDataPermissionsEditor(customData);
         customDataPermissionsEditor.append(value);
         customData.save();
-        refreshAuthentication();
     }
 
     private void addField(CustomData customData, String key, String value) {
@@ -176,21 +160,6 @@ public class CustomDataManager {
             throw new IllegalArgumentException(msg);
         }
         customData.save();
-    }
-
-    /**
-     * Whenever the data of the spring security string is updated in the custom data we need to re-authenticate
-     * the user in order to get its Permissions regenerated with the new values.
-     */
-    private void refreshAuthentication() {
-        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (user != null && user.getUsername() != null && user.getPassword() != null) {
-            SecurityContextHolder.clearContext();
-            Authentication authentication = authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-            if(authentication != null) {
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
-        }
     }
 
 }

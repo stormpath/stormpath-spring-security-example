@@ -111,6 +111,7 @@ as opposed to:
 
 - Upgraded Stormpath SDK dependency to latest stable release of 1.0.RC2
 - Upgraded Spring Security Stormpath plugin to latest stable release of 0.3.0
+- Removed dynamic permissions for CustomData changes. User must logout and re-login to get permission changes applied.
 
 ### 0.2.0
 
