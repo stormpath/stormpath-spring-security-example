@@ -174,7 +174,7 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-webmvc</artifactId>
-                <version>${spring.web.version}</version>
+                <version>${spring.webmvc.version}</version>
             </dependency>
 
             <!-- Test Libraries -->
