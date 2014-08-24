@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2013 Stormpath, Inc.
+  ~ Copyright 2014 Stormpath, Inc.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@
 
     <groupId>com.stormpath.spring</groupId>
     <artifactId>stormpath-spring-security-example-root</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Stormpath Spring Security Example</name>
@@ -83,8 +83,8 @@
         <slf4j.version>1.7.5</slf4j.version>
         <spring.security.version>3.2.0.RELEASE</spring.security.version>
         <spring.webmvc.version>4.0.1.RELEASE</spring.webmvc.version>
-        <stormpath.sdk.version>0.9.2</stormpath.sdk.version>
-        <stormpath.spring.security.version>0.2.0</stormpath.spring.security.version>
+        <stormpath.sdk.version>1.0.RC2</stormpath.sdk.version>
+        <stormpath.spring.security.version>0.3.0</stormpath.spring.security.version>
 
         <!-- Test Dependencies: -->
         <easymock.version>3.1</easymock.version>
@@ -94,21 +94,19 @@
 
     <dependencies>
 
+        <!-- Stormpath SDK -->
         <dependency>
             <groupId>com.stormpath.sdk</groupId>
-            <artifactId>stormpath-sdk-httpclient</artifactId>
+            <artifactId>stormpath-sdk-api</artifactId>
             <version>${stormpath.sdk.version}</version>
-            <scope>runtime</scope>
+            <scope>compile</scope>
         </dependency>
+
+        <!-- Stormpath Spring Security Plugin -->
         <dependency>
-            <groupId>jstl</groupId>
-            <artifactId>jstl</artifactId>
-            <version>${jstl.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring.webmvc.version}</version>
+            <groupId>com.stormpath.spring.security</groupId>
+            <artifactId>stormpath-spring-security-core</artifactId>
+            <version>${stormpath.spring.security.version}</version>
         </dependency>
 
         <!-- Spring Security Dependencies -->
@@ -126,6 +124,13 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
             <version>${spring.security.version}</version>
+        </dependency>
+
+        <!-- JSP Standard Tag Library -->
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${jstl.version}</version>
         </dependency>
 
         <!-- Test Dependencies -->
@@ -151,7 +156,6 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -159,39 +163,18 @@
 
         <dependencies>
 
+            <!-- Stormpath Spring Security Plugin -->
             <dependency>
                 <groupId>com.stormpath.spring.security</groupId>
                 <artifactId>stormpath-spring-security-core</artifactId>
                 <version>${stormpath.spring.security.version}</version>
             </dependency>
+
+            <!-- Spring WebMVC -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-webmvc</artifactId>
                 <version>${spring.webmvc.version}</version>
-            </dependency>
-
-            <!-- Spring Security Dependencies -->
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-config</artifactId>
-                <version>${spring.security.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-taglibs</artifactId>
-                <version>${spring.security.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-web</artifactId>
-                <version>${spring.security.version}</version>
-            </dependency>
-
-            <!-- Logging -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
             </dependency>
 
             <!-- Test Libraries -->
@@ -213,25 +196,6 @@
                 <version>${easymock.version}</version>
                 <scope>test</scope>
             </dependency>
-            <dependency>
-                <!-- Required for any libraries that expect to call the commons logging APIs -->
-                <groupId>org.slf4j</groupId>
-                <artifactId>jcl-over-slf4j</artifactId>
-                <version>${slf4j.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>${logback.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-
         </dependencies>
 
     </dependencyManagement>
