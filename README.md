@@ -44,7 +44,7 @@ Usage documentation [is in the wiki](https://github.com/stormpath/stormpath-spri
 
 2. Run it:
 
-	`mvn tomcat:run`
+	`mvn jetty:run`
 
 ## Using your domain-specific Role names ##
 
@@ -89,7 +89,8 @@ By default, the stormpath-spring-security plugin and this sample app uses Groups
 	```xml
 	<http auto-config='true' access-decision-manager-ref="accessDecisionManager" >
 		<intercept-url pattern="/secured/*" access="ROLE_A" />
-		<logout logout-url="/logout" logout-success-url="/logoutSuccess.jsp"/>
+		<form-login login-page="/login_redirect.jsp" default-target-url='/index.jsp' />
+		<logout logout-success-url="/index.jsp"/>
 	</http>
 	```
 
@@ -106,6 +107,13 @@ as opposed to:
 
 
 ## Change Log
+
+### 0.4.0
+
+- [Issue 10](https://github.com/stormpath/stormpath-spring-security-example/issues/10): Showcase the use of [ID Site](http://docs.stormpath.com/guides/using-id-site/) via Stormpath Spring Security Plugin.
+- [Issue 11](https://github.com/stormpath/stormpath-spring-security-example/issues/11): Spring Security upgraded to version 3.2.5.RELEASE.
+- [Issue 12](https://github.com/stormpath/stormpath-spring-security-example/issues/12): Spring upgraded to version 4.0.6.RELEASE.
+- [Issue 13](https://github.com/stormpath/stormpath-spring-security-example/issues/13): Switch to Jetty instead of Tomcat as Servlet container.
 
 ### 0.3.0
 
