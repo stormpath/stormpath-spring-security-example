@@ -1,6 +1,6 @@
 <%@ page import="com.stormpath.spring.security.provider.StormpathUserDetails" %>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
-<%@ page import="com.stormpath.spring.security.web.conf.Configuration" %>
+<%@ page import="com.stormpath.spring.security.servlet.conf.UrlFor" %>
 <%--
   ~ Copyright (c) 2014 Stormpath, Inc. and contributors
   ~
@@ -43,18 +43,10 @@
     %>
     <c:out value="${account.givenName}"/></sec:authorize>!
     ( <sec:authorize access="isFullyAuthenticated()">
-        <% if (Configuration.isIDSiteEnabled()) { %>
-            <a href="<c:url value="/idsite/logout"/>">Log out</a>
-        <% } else { %>
-            <a href="<c:url value="/j_spring_security_logout"/>">Log out</a>
-        <% } %>
+        <a href="<c:url value="<%=UrlFor.get("logout_forwarder")%>"/>">Log out</a>
     </sec:authorize>
     <sec:authorize access="!isFullyAuthenticated()">
-        <% if (Configuration.isIDSiteEnabled()) { %>
-            <a href="<c:url value="/idsite/login"/>">Log in</a> (sample accounts provided)
-        <% } else { %>
-            <a href="<c:url value="/spring_security_login"/>">Log in</a> (sample accounts provided)
-        <% } %>
+        <a href="<c:url value="<%=UrlFor.get("login_forwarder")%>"/>">Log in</a> (sample accounts provided)
     </sec:authorize>)
 
 </p>
@@ -64,12 +56,12 @@
     This page represents the home page of any web application.</p>
 
 <sec:authorize access="isFullyAuthenticated()">
-<p>Visit your <a href="<c:url value="/account/index.jsp"/>">account page</a>.</p>
-<p>Edit your <a href="/account/customData.jsp">account's custom data</a>.</p>
+<p>Visit your <a href="<c:url value="<%=UrlFor.get("account")%>"/>">account page</a>.</p>
+<p>Edit your <a href="<%=UrlFor.get("customData.action")%>">account's custom data</a>.</p>
 </sec:authorize>
 
-<sec:authorize access="!isFullyAuthenticated()"><p>If you want to access the user-only <a href="<c:url value="/account/index.jsp"/>">account page</a> or <a href="<c:url
-value="/account/customData.jsp"/>">custom data page</a>, you will need to log-in first.</p></sec:authorize>
+<sec:authorize access="!isFullyAuthenticated()"><p>If you want to access the user-only <a href="<c:url value="<%=UrlFor.get("account")%>"/>">account page</a> or <a href="<c:url
+value="<%=UrlFor.get("customData.action")%>"/>">custom data page</a>, you will need to log-in first.</p></sec:authorize>
 
 <h2>Roles</h2>
 

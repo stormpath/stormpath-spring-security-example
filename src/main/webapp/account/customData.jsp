@@ -1,3 +1,4 @@
+<%@ page import="com.stormpath.spring.security.servlet.conf.UrlFor" %>
 <%--
   ~ Copyright (c) 2014 Stormpath, Inc. and contributors
   ~
@@ -27,8 +28,8 @@
 
 <table width="100%">
 <tr>
-    <td><a href="<c:url value="/home.jsp"/>">Return to the home page</a></td>
-    <td><a href="<c:url value="/j_spring_security_logout"/>">Log out</a></td>
+    <td><a href="<c:url value="<%=UrlFor.get("home")%>"/>">Return to the home page</a></td>
+    <td><a href="<c:url value="<%=UrlFor.get("logout_forwarder")%>"/>">Log out</a></td>
 </tr>
 </table>
 
@@ -77,7 +78,7 @@
             key = $("#newKey").val();
             value = $("#newValue").val();
             accountId = "${accountId}"
-            var targetUrl = "/account/customData/"+accountId;
+            var targetUrl = "<%=UrlFor.get("customData.action")%>"+"/"+accountId;
             if (key == "" || key.indexOf(" ") != -1) {
                 alert("Custom data keys cannot be empty nor contain spaces")
                 return
@@ -121,7 +122,7 @@
     });
     //Removal of custom data fields will carried out using this jQuery call.
     function deleteCustomDataField(accountId, key) {
-        var targetUrl = "/account/customData/"+accountId+"/"+key;
+        var targetUrl = "<%=UrlFor.get("customData.action")%>"+"/"+accountId+"/"+key;
         $.ajax({
             type: 'DELETE',
             url: targetUrl,

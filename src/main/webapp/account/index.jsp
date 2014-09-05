@@ -1,3 +1,4 @@
+<%@ page import="com.stormpath.spring.security.servlet.conf.UrlFor" %>
 <%--
   ~ Copyright (c) 2014 Stormpath, Inc. and contributors
   ~
@@ -25,9 +26,9 @@
 
 <p>You are currently logged in.</p>
 
-<p><a href="<c:url value="/home.jsp"/>">Return to the home page.</a></p>
+<p><a href="<c:url value="<%=UrlFor.get("home")%>"/>">Return to the home page.</a></p>
 
-<p><a href="<c:url value="/j_spring_security_logout"/>">Log out.</a></p>
+<p><a href="<c:url value="<%=UrlFor.get("logout_forwarder")%>"/>">Log out.</a></p>
 
 </body>
 </html>

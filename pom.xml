@@ -29,7 +29,7 @@
     <groupId>com.stormpath.spring</groupId>
     <artifactId>stormpath-spring-security-example-root</artifactId>
     <version>0.3.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>war</packaging>
 
     <description>Sample Application using Stormpath Spring Security integration.</description>
     <inceptionYear>2013</inceptionYear>
@@ -72,18 +72,13 @@
         </developer>
     </developers>
 
-    <!--<modules>-->
-        <!--<module>web</module>-->
-    <!--</modules>-->
-
     <properties>
         <!-- For the Maven Jetty plugin (mvn jetty:run) -->
         <jetty.version>8.1.15.v20140411</jetty.version>
         <jstl.version>1.2</jstl.version>
         <logback.version>1.0.13</logback.version>
-        <slf4j.version>1.7.5</slf4j.version>
-        <spring.security.version>3.2.0.RELEASE</spring.security.version>
-        <spring.webmvc.version>4.0.1.RELEASE</spring.webmvc.version>
+        <spring.security.version>3.2.5.RELEASE</spring.security.version>
+        <spring.version>4.0.6.RELEASE</spring.version>
         <stormpath.sdk.version>1.0.0-SNAPSHOT</stormpath.sdk.version>
         <stormpath.spring.security.version>0.4.0-SNAPSHOT</stormpath.spring.security.version>
 
@@ -91,19 +86,13 @@
         <easymock.version>3.1</easymock.version>
         <groovy.version>2.1.6</groovy.version>
         <junit.version>4.10</junit.version>
+
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
 
-        <!-- Pull in the Stormpath Spring Security Servlet -->
-        <!--<dependency>-->
-            <!--<groupId>com.stormpath.spring.security</groupId>-->
-            <!--<artifactId>stormpath-spring-security-servlet</artifactId>-->
-            <!--<version>${stormpath.spring.security.version}</version>-->
-            <!--<type>war</type>-->
-            <!--<scope>compile</scope>-->
-        <!--</dependency>-->
-        <!-- Stormpath SDK -->
         <dependency>
             <groupId>com.stormpath.sdk</groupId>
             <artifactId>stormpath-sdk-api</artifactId>
@@ -121,8 +110,6 @@
             <groupId>com.stormpath.spring.security</groupId>
             <artifactId>stormpath-spring-security-servlet</artifactId>
             <version>${stormpath.spring.security.version}</version>
-            <!--<type>war</type>-->
-            <!--<scope>runtime</scope>-->
         </dependency>
 
         <!-- Spring Security Dependencies -->
@@ -140,6 +127,18 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
             <version>${spring.security.version}</version>
+        </dependency>
+
+         <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
         </dependency>
 
         <!-- JSP Standard Tag Library -->
@@ -173,141 +172,9 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
-            <scope>test</scope>
         </dependency>
+
     </dependencies>
-
-    <dependencyManagement>
-
-        <dependencies>
-
-            <!--<dependency>-->
-                <!--<groupId>com.stormpath.spring.security</groupId>-->
-                <!--<artifactId>stormpath-spring-security-core</artifactId>-->
-                <!--<version>${stormpath.spring.security.version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>com.stormpath.spring.security</groupId>-->
-                <!--<artifactId>stormpath-spring-security-servlet</artifactId>-->
-                <!--<version>${stormpath.spring.security.version}</version>-->
-                <!--<type>war</type>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>com.stormpath.spring.security</groupId>-->
-                <!--<artifactId>stormpath-spring-security-servlet</artifactId>-->
-                <!--<version>${stormpath.spring.security.version}</version>-->
-                <!--<type>war</type>-->
-                <!--<scope>compile</scope>-->
-            <!--</dependency>-->
-
-            <!--<dependency>-->
-                <!--<groupId>org.springframework</groupId>-->
-                <!--<artifactId>spring-webmvc</artifactId>-->
-                <!--<version>${spring.webmvc.version}</version>-->
-            <!--</dependency>-->
-
-            <!-- Spring Security Dependencies -->
-            <!--<dependency>-->
-                <!--<groupId>org.springframework.security</groupId>-->
-                <!--<artifactId>spring-security-config</artifactId>-->
-                <!--<version>${spring.security.version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.springframework.security</groupId>-->
-                <!--<artifactId>spring-security-taglibs</artifactId>-->
-                <!--<version>${spring.security.version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.springframework.security</groupId>-->
-                <!--<artifactId>spring-security-web</artifactId>-->
-                <!--<version>${spring.security.version}</version>-->
-            <!--</dependency>-->
-
-            <!-- Logging -->
-            <!--<dependency>-->
-                <!--<groupId>org.slf4j</groupId>-->
-                <!--<artifactId>slf4j-api</artifactId>-->
-                <!--<version>${slf4j.version}</version>-->
-            <!--</dependency>-->
-
-            <!-- Test Libraries -->
-            <!--<dependency>-->
-                <!--<groupId>junit</groupId>-->
-                <!--<artifactId>junit</artifactId>-->
-                <!--<version>${junit.version}</version>-->
-                <!--<scope>test</scope>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.codehaus.groovy</groupId>-->
-                <!--<artifactId>groovy-all</artifactId>-->
-                <!--<version>${groovy.version}</version>-->
-                <!--<scope>test</scope>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.easymock</groupId>-->
-                <!--<artifactId>easymock</artifactId>-->
-                <!--<version>${easymock.version}</version>-->
-                <!--<scope>test</scope>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!-- Required for any libraries that expect to call the commons logging APIs -->
-                <!--<groupId>org.slf4j</groupId>-->
-                <!--<artifactId>jcl-over-slf4j</artifactId>-->
-                <!--<version>${slf4j.version}</version>-->
-                <!--<scope>test</scope>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>ch.qos.logback</groupId>-->
-                <!--<artifactId>logback-classic</artifactId>-->
-                <!--<version>${logback.version}</version>-->
-                <!--<scope>test</scope>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.slf4j</groupId>-->
-                <!--<artifactId>slf4j-log4j12</artifactId>-->
-                <!--<version>${slf4j.version}</version>-->
-            <!--</dependency>-->
-
-        <!--</dependencies>-->
-
-    <!--</dependencyManagement>-->
-
-            <!-- Stormpath Spring Security Plugin -->
-            <dependency>
-                <groupId>com.stormpath.spring.security</groupId>
-                <artifactId>stormpath-spring-security-core</artifactId>
-                <version>${stormpath.spring.security.version}</version>
-            </dependency>
-
-            <!-- Spring WebMVC -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-webmvc</artifactId>
-                <version>${spring.webmvc.version}</version>
-            </dependency>
-
-            <!-- Test Libraries -->
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.codehaus.groovy</groupId>
-                <artifactId>groovy-all</artifactId>
-                <version>${groovy.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.easymock</groupId>
-                <artifactId>easymock</artifactId>
-                <version>${easymock.version}</version>
-                <scope>test</scope>
-            </dependency>
-        </dependencies>
-
-    </dependencyManagement>
 
 
     <build>
@@ -316,7 +183,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.1</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -331,29 +198,22 @@
                 <executions>
                     <execution>
                         <goals>
-                            <!--<goal>generateStubs</goal>-->
                             <goal>testCompile</goal>
-                            <!--<goal>generateTestStubs</goal>-->
-                            <!--<goal>testCompile</goal>-->
                         </goals>
-
-                    <configuration>
-                    <sources>
-                        <fileset>
-                            <directory>src/test/groovy</directory>
-                            <includes>
-                                <include>**/*.groovy</include>
-                            </includes>
-                        </fileset>
-                    </sources>
-                    </configuration>
+                        <configuration>
+                            <providerSelection>2.0</providerSelection>
+                            <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
+                            <sources>
+                                <fileset>
+                                    <directory>src/test/groovy</directory>
+                                    <includes>
+                                        <include>**/*.groovy</include>
+                                    </includes>
+                                </fileset>
+                            </sources>
+                        </configuration>
                     </execution>
                 </executions>
-
-                    <!--<providerSelection>2.0</providerSelection>-->
-                    <!--<source>src/test/groovy/</source>-->
-                    <!--<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>-->
-                    <!--<defaultScriptExtension>.groovy</defaultScriptExtension>-->
 
                 <dependencies>
                     <dependency>
@@ -385,76 +245,15 @@
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-war-plugin</artifactId>-->
-                <!--<version>2.1.1</version>-->
-                <!--<configuration>-->
-                    <!--<webXml>${basedir}/web/src/main/webapp/WEB-INF/web.xml</webXml>-->
-                    <!--<webResources>-->
-                        <!--<resource>-->
-                            <!--<directory>target/classes/</directory>-->
-                            <!--<targetPath>WEB-INF/classes/</targetPath>-->
-                        <!--</resource>-->
-                    <!--</webResources>-->
-                    <!--<overlays>-->
-                        <!--<overlay>-->
-                            <!--<groupId>com.stormpath.spring.security</groupId>-->
-                            <!--<artifactId>stormpath-spring-security-servlet</artifactId>-->
-                            <!--<targetPath>js/dojo-1.8.1</targetPath>-->
-                            <!--<excludes>-->
-                                <!--<exclude>WEB-INF/**</exclude>-->
-                                <!--<exclude>META-INF/**</exclude>-->
-                            <!--</excludes>-->
-                        <!--</overlay>-->
-                    <!--</overlays>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jetty.version}</version>
                 <configuration>
-                    <!--<webApp>-->
-                        <!--<extraClasspath>web/target/classes</extraClasspath>-->
-                        <!--<descriptor>web/src/main/webapp/WEB-INF</descriptor>-->
-                        <!--<resourceBase>web/src/main/webapp</resourceBase>-->
-                    <!--</webApp>-->
                     <webAppConfig>
                         <contextPath>/</contextPath>
                         <allowDuplicateFragmentNames>true</allowDuplicateFragmentNames>
-                        <!--<baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">-->
-                            <!--<resourcesAsCSV>web/src/main/webapp</resourcesAsCSV>-->
-                        <!--</baseResource>-->
-                        <!--<baseAppFirst>true</baseAppFirst>-->
-                        <!--<resourceBases>-->
-                            <!--<resourceBase>web/src/main/webapp</resourceBase>-->
-                            <!--<extraClasspath>web/src/main/java</extraClasspath>-->
-                        <!--</resourceBases>-->
-                        <!--<baseResource implementation="org.mortbay.resource.ResourceCollection">-->
-                            <!--<resourcesAsCSV>web/src/main/webapp</resourcesAsCSV>-->
-                        <!--</baseResource>-->
-                        <!--<descriptor>web/src/main/webapp/WEB-INF</descriptor>-->
-                        <!--<extraClasspath></extraClasspath>-->
-                        <!--<resourceBase>web/src/main/webapp</resourceBase>-->
-                        <!--<descriptor>${basedir}/web/src/main/webapp/WEB-INF/web.xml</descriptor>-->
-                        <!--<resourceBases>-->
-                            <!--<resourceBase>${project.basedir}/web/src/main/webapp</resourceBase>-->
-                            <!--<resourceBase>${project.basedir}/web/src/main/java</resourceBase>-->
-                        <!--</resourceBases>-->
                     </webAppConfig>
-                    <!--<webResources>-->
-                        <!--<resource>-->
-                            <!--<directory>web/src/main/java</directory>-->
-                            <!--<directory>web/target/classes</directory>-->
-                        <!--</resource>-->
-                    <!--</webResources>-->
-                    <!--<webAppSourceDirectory>web/src/main/webapp</webAppSourceDirectory>-->
-                    <!--<webAppXml>web/src/main/webapp/WEB-INF/web.xml</webAppXml>-->
-                    <!--<classesDirectory>web/target/classes</classesDirectory>-->
-                    <!--<webApp>-->
-                        <!--<baseResource>${project.basedir}/web/src/main/webapp</baseResource>-->
-                    <!--</webApp>-->
                     <stopKey>stop</stopKey>
                     <stopPort>9999</stopPort>
                     <connectors>
@@ -474,63 +273,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>stormpath-signature</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.4</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>docs</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.8.1</version>
-                        <executions>
-                            <execution>
-                                <id>attach-api-docs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <inherited>true</inherited>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>2.1.2</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <inherited>true</inherited>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>

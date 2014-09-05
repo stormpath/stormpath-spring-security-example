@@ -20,6 +20,7 @@ import com.stormpath.spring.security.example.model.CustomDataFieldBean;
 import com.stormpath.spring.security.provider.AccountCustomDataPermissionResolver;
 import com.stormpath.spring.security.provider.StormpathAuthenticationProvider;
 import com.stormpath.spring.security.provider.StormpathUserDetails;
+import com.stormpath.spring.security.servlet.conf.UrlFor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +70,7 @@ public class StormpathSpringSecurityExampleController {
             logger.warn(ex.getMessage());
         }
 
-        return "/account/customData";
+        return UrlFor.get("customData");
     }
 
     /**

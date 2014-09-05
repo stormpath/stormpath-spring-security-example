@@ -1,3 +1,4 @@
+<%@ page import="com.stormpath.spring.security.servlet.conf.UrlFor" %>
 <%--
   ~ Copyright (c) 2014 Stormpath, Inc. and contributors
   ~
@@ -15,4 +16,4 @@
   --%>
 
 <%-- Forward the user to the home page --%>
-<jsp:forward page="home.jsp"/>
+<jsp:forward page="<%=UrlFor.get("home")%>"/>

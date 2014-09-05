@@ -88,7 +88,6 @@ public class CustomDataManager {
      * @param isPermissionKey true if the key is the "spring permission string", false otherwise
      * @return a {@link CustomDataFieldBean} instance containing the custom data field just updated
      */
-    @CacheEvict(value = "com.stormpath.sdk.account.Account", key = "#accountHref", condition = "#isPermissionKey" )
     @PreAuthorize("isAuthenticated() and principal.properties.get('href') == #accountHref") //Is the user the owner of the account to be edited?
     public CustomDataFieldBean addCustomDataField(String accountHref, String key, String value, boolean isPermissionKey) {
         if (!StringUtils.hasText(accountHref)) {
@@ -120,7 +119,6 @@ public class CustomDataManager {
      * @param key the key of the custom data field to be deleted
      * @param isPermissionKey true if the key is the "spring permission string", false otherwise
      */
-    @CacheEvict(value = "com.stormpath.sdk.account.Account", key = "#accountHref", condition = "#isPermissionKey" )
     @PreAuthorize("isAuthenticated() and principal.properties.get('href') == #accountHref") //Is the user the owner of the account to be edited?
     public void deleteCustomDataField(String accountHref, String key, boolean isPermissionKey) {
         if (!StringUtils.hasText(accountHref)) {
