@@ -52,9 +52,9 @@
         <!-- beans:property name="groupGrantedAuthorityResolver" ref="groupGrantedAuthorityResolver" / -->
     </beans:bean>
 
-    <http auto-config='true' use-expressions="true" >
+    <http auto-config="true" use-expressions="true" >
         <intercept-url pattern="/account/*" access="hasRole('REPLACE_ME_WITH_YOUR_STORMPATH_GROUP_ALLOWED_TO_ACCESS_THIS_SECURED_RESOURCE')" />
-        <form-login login-page="/login_redirect.jsp" default-target-url='/index.jsp' />
+        <form-login login-page="/login_redirect.jsp" />
         <logout logout-success-url="/index.jsp"/>
     </http>
 
