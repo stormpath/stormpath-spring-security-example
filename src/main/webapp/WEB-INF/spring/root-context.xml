@@ -45,9 +45,6 @@
         <property name="permissionEvaluator" ref="permissionEvaluator"/>
     </bean>
 
-    <!-- Notifications about IdSite-related activity will be sent to this listener -->
-    <bean id="idSiteResultListener" class="com.stormpath.spring.security.example.idsite.IdSiteListener" />
-
     <!-- Generic cache manager based on the JDK ConcurrentMap -->
     <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">
