@@ -112,6 +112,7 @@ as opposed to:
 - Upgraded Stormpath SDK dependency to latest stable release of 1.0.RC2
 - Upgraded Spring Security Stormpath plugin to latest stable release of 0.3.0
 - [Issue 8](https://github.com/stormpath/stormpath-spring-security-example/issues/8): Removed dynamic permissions for CustomData changes. User must logout and re-login to get permission changes applied.
+- [Issue 14](https://github.com/stormpath/stormpath-spring-security-example/issues/14): Switched project to Spring JavaConfig. XML Configuration is still available but disabled.
 
 ### 0.2.0
 

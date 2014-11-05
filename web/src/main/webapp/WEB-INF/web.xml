@@ -22,27 +22,47 @@
 		<servlet-name>dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+        <!-- XML Config Start -->
+            <!--<param-name>contextConfigLocation</param-name>-->
+            <!--<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>-->
+        <!-- XML Config End -->
+        <!-- JavaConfig Start -->
+            <param-name>contextClass</param-name>
+            <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+        <!-- JavaConfig End -->
         </init-param>
-		<load-on-startup>1</load-on-startup>
+        <load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- Spring context files to be loaded -->
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-            <!-- Parent context -->
-            /WEB-INF/spring/root-context.xml,
-            /WEB-INF/spring-security.xml
+    <!-- XML Config Start -->
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>
+            org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+        </param-value>
+    </context-param>
+    <!-- XML Config End -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            <!-- XML Config Start -->
+            <!--/WEB-INF/spring/root-context.xml,-->
+            <!--/WEB-INF/spring-security.xml-->
+            <!-- XML Config End -->
+            <!-- JavaConfig Start -->
+            com.stormpath.spring.security.example.config.ServletContextConfig,
+            com.stormpath.spring.security.example.config.RootContextConfig,
+            com.stormpath.spring.security.example.config.SpringSecurityConfig
+            <!-- JavaConfig End -->
         </param-value>
 	</context-param>
-	
+
 	<listener>
 	    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -52,7 +72,7 @@
 	  <filter-name>springSecurityFilterChain</filter-name>
 	  <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
-	
+
 	<filter-mapping>
 	  <filter-name>springSecurityFilterChain</filter-name>
 	  <url-pattern>/*</url-pattern>
