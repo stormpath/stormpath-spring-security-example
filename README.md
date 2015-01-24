@@ -14,6 +14,7 @@ Stormpath offers usage documentation and support for the Spring Security Plugin 
 ## Links
 Below are some resources you might find useful!
 - [The Spring Security Plugin for Stormpath](http://projects.spring.io/spring-security/)
+- Release changes are viewable in the [change log](changelog.md)
 
 **Stormpath Java Support**
 - [Stormpath API Docs for Java](https://docs.stormpath.com/java/apidocs/)
