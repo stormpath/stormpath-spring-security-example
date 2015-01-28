@@ -2,13 +2,24 @@
 
 # Stormpath Spring Security Web Sample #
 
-Copyright &copy; 2013 Stormpath, Inc. and contributors. This project is open-source via the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0).  
+This sample application uses the [Stormpath Spring Security](https://github.com/stormpath/stormpath-spring-security) plugin to demonstrate how to integrate Stormpath and Spring Security.
 
-This sample application uses the [Stormpath Spring Security](https://github.com/stormpath/stormpath-spring-security) plugin to demonstrate how to achieve Stormpath and Spring Security integration.
+Stormpath is a User Management API that reduces development time with instant-on, scalable user infrastructure. Stormpath's intuitive API and expert support make it easy for developers to authenticate, manage, and secure users and roles in any application.
 
-The `stormpath-spring-security` plugin allows a [Spring Security](http://projects.spring.io/spring-security/)-enabled application to use the [Stormpath](http://www.stormpath.com) User Management & Authentication service for all authentication and access control needs.
+The `stormpath-spring-security` plugin allows a [Spring Security](http://projects.spring.io/spring-security/)-enabled application to use the [Stormpath](http://www.stormpath.com) User Management & Authentication API for all authentication and access control needs.
 
-Usage documentation [is in the wiki](https://github.com/stormpath/stormpath-spring-security-example/wiki).
+## Documentation
+Stormpath offers usage documentation and support for the Spring Security Plugin for Stormpath [in the wiki](https://github.com/stormpath/stormpath-spring-security-example/wiki). Please email support@stormpath.com with any errors or issues with the documentation.
+
+## Links
+Below are some resources you might find useful!
+- [The Spring Security Plugin for Stormpath](https://github.com/stormpath/stormpath-spring-security)
+- Release changes are viewable in the [change log](changelog.md)
+
+**Stormpath Java Support**
+- [Stormpath API Docs for Java](https://docs.stormpath.com/java/apidocs/)
+- [Stormpath Java Product Guide](https://docs.stormpath.com/java/product-guide/)
+- [Stormpath Java SDK](https://github.com/stormpath/stormpath-sdk-java)
 
 ## Setup ##
 
@@ -103,24 +114,15 @@ as opposed to:
 ```java
 @PreAuthorize("hasRole('https://api.stormpath.com/v1/groups/l4aDkz0QPcf2z23j93l1T')")
 ```
+## Contributing
 
+Contributions, bug reports and issues are very welcome. Stormpath regularly maintains this repository, and are quick to review pull requests and accept changes!
 
-## Change Log
+You can make your own contributions by forking the develop branch of this
+repository, making your changes, and issuing pull request on the develop branch.
 
-### 0.3.0
+## Copyright ##
 
-- Upgraded Stormpath SDK dependency to latest stable release of 1.0.RC2
-- Upgraded Spring Security Stormpath plugin to latest stable release of 0.3.0
-- [Issue 8](https://github.com/stormpath/stormpath-spring-security-example/issues/8): Removed dynamic permissions for CustomData changes. User must logout and re-login to get permission changes applied.
+Copyright &copy; 2013-2015 Stormpath, Inc. and contributors.
 
-### 0.2.0
-
-- Upgraded Stormpath SDK dependency to latest stable release of 0.9.2
-- Upgraded Spring Security Stormpath plugin to latest stable release of 0.2.0
-- Added page to view and edit account's CustomData
-- Added Permissions example. It is now possible to use Spring Security Granted Authorities as permissions for Stormpath Accounts or Groups by leveraging Stormpath's newly released [CustomData](http://docs.stormpath.com/rest/product-guide/#custom-data) feature.
-- Stormpath SDK now has a Spring cache configured: a simple JDK ConcurrentMap
-
-### 0.1.0
-
-- First release
+This project is open-source via the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0).
