@@ -1,5 +1,9 @@
 ## Change Log
 
+### x.x.x
+
+- Everything in this repo has now been integrated into [stormpath-sdk-java](https://github.com/stormpath/stormpath-sdk-java) since 1.0.RC5
+
 ### 0.3.0
 
 - Upgraded Stormpath SDK dependency to latest stable release of 1.0.RC2
